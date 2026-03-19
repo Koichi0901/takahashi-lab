@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>髙橋研究室 - 東京農工大学大学院工学府産業技術専攻</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --ink-light: #3a3a5c;
+    --ink-muted: #6b6b8d;
+    --parchment: #faf9f6;
+    --parchment-warm: #f5f0e8;
+    --accent: #2c4a6e;
+    --accent-deep: #1b3a5c;
+    --accent-light: #e8eef5;
+    --gold: #8b7355;
+    --gold-light: #c4a97d;
+    --border: #d4cfc5;
+    --border-light: #e8e3da;
+    --white: #ffffff;
+    --shadow-sm: 0 1px 3px rgba(26,26,46,0.06);
+    --shadow-md: 0 4px 16px rgba(26,26,46,0.08);
+    --shadow-lg: 0 8px 32px rgba(26,26,46,0.10);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    color: var(--ink);
+    background: var(--parchment);
+    line-height: 1.85;
+    font-weight: 400;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== HEADER ===== */
+  .site-header {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    background: rgba(255,255,255,0.95);
+  }
+
+  .header-top {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 40px 16px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .header-identity {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .header-univ {
+    font-size: 11.5px;
+    color: var(--ink-muted);
+    letter-spacing: 0.08em;
+    font-weight: 400;
+  }
+
+  .header-lab-name {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    line-height: 1.3;
+  }
+
+  .header-lab-name span {
+    color: var(--accent);
+  }
+
+  nav {
+    display: flex;
+    gap: 0;
+    align-items: center;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: var(--ink-light);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 18px;
+    border-radius: 2px;
+    transition: all 0.25s ease;
+    letter-spacing: 0.04em;
+    position: relative;
+  }
+
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 18px;
+    right: 18px;
+    height: 1.5px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  nav a:hover { color: var(--accent); }
+  nav a:hover::after { transform: scaleX(1); }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: linear-gradient(165deg, var(--accent-deep) 0%, var(--accent) 40%, #3d6a9e 100%);
+    position: relative;
+    overflow: hidden;
+    padding: 80px 40px 72px;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 600px 400px at 80% 20%, rgba(255,255,255,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 400px 300px at 20% 80%, rgba(255,255,255,0.04) 0%, transparent 70%);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.6;
+  }
+
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero h1 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+    line-height: 1.35;
+  }
+
+  .hero-subtitle {
+    font-size: 15px;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 0.06em;
+    font-weight: 300;
+    margin-bottom: 28px;
+  }
+
+  .hero-keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .hero-keywords span {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.9);
+    padding: 6px 16px;
+    border-radius: 3px;
+    font-size: 12.5px;
+    letter-spacing: 0.04em;
+    font-weight: 400;
+    backdrop-filter: blur(4px);
+  }
+
+  /* ===== SECTIONS ===== */
+  .content-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  section {
+    padding: 72px 0;
+  }
+
+  section + section {
+    border-top: 1px solid var(--border-light);
+  }
+
+  .section-header {
+    margin-bottom: 48px;
+  }
+
+  .section-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: 0.03em;
+    line-height: 1.4;
+  }
+
+  .section-title::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 2px;
+    background: var(--gold-light);
+    margin-top: 16px;
+  }
+
+  /* ===== RESEARCH ===== */
+  .research-intro {
+    font-size: 15.5px;
+    color: var(--ink-light);
+    line-height: 2;
+    margin-bottom: 48px;
+    max-width: 800px;
+  }
+
+  .research-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+
+  .research-card {
+    background: var(--white);
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
+    padding: 36px 32px;
+    transition: all 0.35s ease;
+    position: relative;
+  }
+
+  .research-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--gold-light));
+    border-radius: 4px 4px 0 0;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+
+  .research-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .research-card:hover::before { opacity: 1; }
+
+  .research-card-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--border);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .research-card h3 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+
+  .research-card p {
+    font-size: 13.5px;
+    color: var(--ink-muted);
+    line-height: 1.85;
+  }
+
+  .research-card .card-keywords {
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .research-card .card-keywords span {
+    font-size: 11px;
+    background: var(--accent-light);
+    color: var(--accent);
+    padding: 3px 10px;
+    border-radius: 2px;
+    letter-spacing: 0.02em;
+  }
+
+  /* ===== MEMBERS ===== */
+  .professor-card {
+    background: var(--white);
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
+    padding: 48px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+
+  .prof-photo-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .prof-photo {
+    width: 180px;
+    height: 240px;
+    border-radius: 4px;
+    border: 1px solid var(--border-light);
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .prof-photo-placeholder {
+    font-size: 11px;
+    color: var(--ink-muted);
+    text-align: center;
+    letter-spacing: 0.04em;
+  }
+
+  .prof-info h3 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .prof-info .prof-name-en {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    color: var(--ink-muted);
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+
+  .prof-info .prof-title {
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .prof-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 32px;
+  }
+
+  .prof-detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .prof-detail-label {
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .prof-detail-value {
+    font-size: 13.5px;
+    color: var(--ink-light);
+    line-height: 1.7;
+  }
+
+  .prof-career {
+    grid-column: 1 / -1;
+    margin-top: 8px;
+  }
+
+  .career-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    padding-left: 20px;
+  }
+
+  .career-timeline::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .career-item {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 16px;
+    padding: 8px 0;
+    position: relative;
+  }
+
+  .career-item::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 15px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--parchment);
+    border: 2px solid var(--accent);
+  }
+
+  .career-item:first-child::before {
+    background: var(--accent);
+  }
+
+  .career-year {
+    font-size: 12px;
+    color: var(--ink-muted);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    padding-top: 1px;
+  }
+
+  .career-desc {
+    font-size: 13px;
+    color: var(--ink-light);
+    line-height: 1.6;
+  }
+
+  /* ===== PUBLICATIONS ===== */
+  .pub-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .pub-item {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border-light);
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 20px;
+  }
+
+  .pub-item:first-child { padding-top: 0; }
+
+  .pub-year {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--gold);
+    padding-top: 2px;
+  }
+
+  .pub-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.65;
+    margin-bottom: 4px;
+  }
+
+  .pub-meta {
+    font-size: 12px;
+    color: var(--ink-muted);
+    line-height: 1.6;
+  }
+
+  .pub-tag {
+    display: inline-block;
+    font-size: 10.5px;
+    background: var(--accent-light);
+    color: var(--accent);
+    padding: 2px 8px;
+    border-radius: 2px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+
+  /* ===== BOOKS ===== */
+  .books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .book-item {
+    background: var(--white);
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
+    padding: 28px 24px;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .book-item:hover { box-shadow: var(--shadow-sm); }
+
+  .book-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+
+  .book-meta {
+    font-size: 12px;
+    color: var(--ink-muted);
+  }
+
+  /* ===== COURSES ===== */
+  .courses-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .course-group h4 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .course-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .course-list li {
+    font-size: 13.5px;
+    color: var(--ink-light);
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .course-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 5px;
+    height: 5px;
+    background: var(--gold-light);
+    border-radius: 1px;
+  }
+
+  /* ===== CONTACT ===== */
+  .contact-section {
+    background: var(--white);
+    border-top: 1px solid var(--border);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    padding: 64px 0;
+  }
+
+  .contact-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .contact-label {
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.12em;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .contact-value {
+    font-size: 14px;
+    color: var(--ink-light);
+    line-height: 1.8;
+  }
+
+  .contact-value a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+
+  .contact-value a:hover { border-bottom-color: var(--accent); }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 32px 40px;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .header-top {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 16px 24px;
+    }
+    nav { flex-wrap: wrap; gap: 0; }
+    nav a { padding: 6px 12px; font-size: 12px; }
+    .hero { padding: 48px 24px; }
+    .hero h1 { font-size: 28px; }
+    .content-wrapper { padding: 0 24px; }
+    section { padding: 48px 0; }
+    .professor-card {
+      grid-template-columns: 1fr;
+      padding: 32px 24px;
+      gap: 28px;
+    }
+    .prof-detail-grid { grid-template-columns: 1fr; }
+    .career-item { grid-template-columns: 1fr; gap: 2px; }
+    .courses-container { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+    .pub-item { grid-template-columns: 50px 1fr; gap: 12px; }
+    .books-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-inner > * {
+    animation: fadeUp 0.7s ease forwards;
+  }
+  .hero-inner > *:nth-child(2) { animation-delay: 0.1s; }
+  .hero-inner > *:nth-child(3) { animation-delay: 0.2s; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-top">
+    <div class="header-identity">
+      <span class="header-univ">東京農工大学 大学院工学府 産業技術専攻</span>
+      <div class="header-lab-name"><span>髙橋</span>研究室</div>
+    </div>
+    <nav>
+      <a href="#research">研究内容</a>
+      <a href="#members">メンバー</a>
+      <a href="#publications">論文・著書</a>
+      <a href="#courses">担当科目</a>
+      <a href="#contact">アクセス</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <h1>組織の力を、未来へ導く。</h1>
+    <p class="hero-subtitle">Organizational Behavior &middot; Human Resource Development &middot; Entrepreneurship Education</p>
+    <div class="hero-keywords">
+      <span>組織行動論</span>
+      <span>人的資源開発</span>
+      <span>組織開発</span>
+      <span>アントレプレナーシップ教育</span>
+      <span>AI協働型組織開発</span>
+    </div>
+  </div>
+</div>
+
+<!-- RESEARCH -->
+<div class="content-wrapper">
+<section id="research">
+  <div class="section-header">
+    <div class="section-label">Research</div>
+    <h2 class="section-title">研究内容</h2>
+  </div>
+
+  <p class="research-intro">
+    髙橋研究室では、「組織」と「人」の関係性に焦点を当て、ボトムアップ型のパーパス経営、PBLを活用した経営教育、
+    そしてAIと人間の協働による新しい組織デザインの可能性を探究しています。企業実務と学術研究の両面から、
+    実践的かつ理論的な知見の創出を目指しています。
+  </p>
+
+  <div class="research-grid">
+    <div class="research-card">
+      <div class="research-card-num">01</div>
+      <h3>パーパス経営と<br>ボトムアップ型組織設計</h3>
+      <p>現場の感性を活かし、事業部・プロジェクトレベルから企業全体のパーパス経営に「意志入れ」するボトムアップ型の組織設計を研究しています。チームビジョン主導の新規事業開発やハートベースの結束力を重視したアプローチを提唱しています。</p>
+      <div class="card-keywords">
+        <span>パーパス経営</span>
+        <span>組織変革</span>
+        <span>感性工学</span>
+      </div>
+    </div>
+
+    <div class="research-card">
+      <div class="research-card-num">02</div>
+      <h3>PBLによる<br>アントレプレナーシップ教育</h3>
+      <p>VIAモデルやSECIモデルを活用し、PBL（Project-Based Learning）における自己認識からセンスメイキングへの過程を解明。ルーブリック開発やチーム内の集団的意味形成を促進する教育方法論を構築しています。</p>
+      <div class="card-keywords">
+        <span>PBL</span>
+        <span>センスメイキング</span>
+        <span>事業創造</span>
+      </div>
+    </div>
+
+    <div class="research-card">
+      <div class="research-card-num">03</div>
+      <h3>AI協働型<br>組織開発</h3>
+      <p>生成AIを協働パートナーとして位置づけ、知識創造プロセスにおけるAIの役割を実証的に検討。MOT大学院PBL実践の知見をもとに、企業内知識創造活動への応用可能性を探究する最新の研究テーマです。</p>
+      <div class="card-keywords">
+        <span>生成AI</span>
+        <span>知識創造</span>
+        <span>MOT</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEMBERS -->
+<section id="members">
+  <div class="section-header">
+    <div class="section-label">Members</div>
+    <h2 class="section-title">メンバー</h2>
+  </div>
+
+  <div class="professor-card">
+    <div class="prof-photo-area">
+      <img class="prof-photo" src="takahashi-photo.jpg" alt="髙橋 浩一 教授">
+    </div>
+    <div class="prof-info">
+      <h3>髙橋 浩一</h3>
+      <div class="prof-name-en">Koichi Takahashi</div>
+      <div class="prof-title">教授 ｜ 博士（感性学）九州大学</div>
+
+      <div class="prof-detail-grid">
+        <div class="prof-detail-item">
+          <span class="prof-detail-label">専門分野</span>
+          <span class="prof-detail-value">組織論・組織行動論<br>アントレプレナーシップ教育</span>
+        </div>
+        <div class="prof-detail-item">
+          <span class="prof-detail-label">学歴</span>
+          <span class="prof-detail-value">慶應義塾大学大学院 SDM研究科 修士<br>九州大学大学院 統合新領域学府 博士</span>
+        </div>
+        <div class="prof-detail-item">
+          <span class="prof-detail-label">所属学会</span>
+          <span class="prof-detail-value">Academy of Management / 経営行動科学学会 / 日本感性工学会 / 日本ベンチャー学会 / 研究・イノベーション学会</span>
+        </div>
+        <div class="prof-detail-item">
+          <span class="prof-detail-label">受賞</span>
+          <span class="prof-detail-value">慶應SDM 優秀賞 / 熊本大学 教育活動表彰 / 九州大学 統合新領域学府賞</span>
+        </div>
+
+        <div class="prof-career prof-detail-item">
+          <span class="prof-detail-label">経歴</span>
+          <div class="career-timeline">
+            <div class="career-item">
+              <span class="career-year">2023年2月 – 現在</span>
+              <span class="career-desc">東京農工大学 大学院工学府産業技術専攻 教授</span>
+            </div>
+            <div class="career-item">
+              <span class="career-year">2018年10月 – 2023年1月</span>
+              <span class="career-desc">熊本大学 熊本創生推進機構 特任教授</span>
+            </div>
+            <div class="career-item">
+              <span class="career-year">2016年6月 – 2018年9月</span>
+              <span class="career-desc">ワークハピネス エグゼクティブコンサルタント</span>
+            </div>
+            <div class="career-item">
+              <span class="career-year">2012年4月 – 2016年5月</span>
+              <span class="career-desc">デロイトトーマツコンサルティング シニアマネージャー</span>
+            </div>
+            <div class="career-item">
+              <span class="career-year">2004年10月 – 2012年4月</span>
+              <span class="career-desc">コミュニケーション・アンド・リスペクト 代表取締役社長</span>
+            </div>
+            <div class="career-item">
+              <span class="career-year">1986年4月 – 2004年</span>
+              <span class="career-desc">出光興産 / 朝日アーサーアンダーセン / ベリングポイント / グローバルナレッジ 等</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background: var(--accent-light); border: 1px dashed var(--accent); border-radius: 4px; padding: 32px; text-align: center;">
+    <p style="font-size: 14px; color: var(--accent); font-weight: 500; margin-bottom: 4px;">学生メンバー</p>
+    <p style="font-size: 13px; color: var(--ink-muted);">学生メンバーの情報をここに追加できます（名前・学年・研究テーマなど）</p>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <div class="section-header">
+    <div class="section-label">Publications</div>
+    <h2 class="section-title">論文・著書</h2>
+  </div>
+
+  <h4 style="font-family: 'Noto Serif JP', serif; font-size: 18px; margin-bottom: 24px; color: var(--ink);">学術論文</h4>
+  <div class="pub-list">
+    <div class="pub-item">
+      <div class="pub-year">2025</div>
+      <div>
+        <div class="pub-title">生成AIを協働パートナーとする知識創造プロセスの実証的検討 ―MOT大学院PBL実践から企業内知識創造活動への応用可能性―</div>
+        <div class="pub-meta">経営行動科学学会第28回年次大会論文集, 353-357</div>
+      </div>
+    </div>
+    <div class="pub-item">
+      <div class="pub-year">2024</div>
+      <div>
+        <div class="pub-title">Proposal of Organizational Design of "Injecting Intent" For Bottom-Up Based Purpose-Driven Management</div>
+        <div class="pub-meta">The 2024 International Conference on Kansei Engineering and Emotion Research <span class="pub-tag">査読有り</span></div>
+      </div>
+    </div>
+    <div class="pub-item">
+      <div class="pub-year">2024</div>
+      <div>
+        <div class="pub-title">Infusing Company-wide Purpose-driven Management with Vision from Project Sites at the Business Unit</div>
+        <div class="pub-meta">International Society of Affective Science and Engineering 2024</div>
+      </div>
+    </div>
+    <div class="pub-item">
+      <div class="pub-year">2022</div>
+      <div>
+        <div class="pub-title">Verification of Sensemaking Process Starting from Self-awareness by the VIA Model in PBL in Entrepreneurship Education Program</div>
+        <div class="pub-meta">日本感性工学会 21(2), 77-84 <span class="pub-tag">査読有り</span></div>
+      </div>
+    </div>
+    <div class="pub-item">
+      <div class="pub-year">2021</div>
+      <div>
+        <div class="pub-title">Development of Rubric for enhancing Sensemaking among Team members in PBL in Entrepreneurship Education</div>
+        <div class="pub-meta">International Journal of Affective Engineering (IJAE) <span class="pub-tag">査読有り</span></div>
+      </div>
+    </div>
+    <div class="pub-item">
+      <div class="pub-year">2021</div>
+      <div>
+        <div class="pub-title">Verification of PBL Activation Methodologies by the SECI Model in Entrepreneurship Education Program</div>
+        <div class="pub-meta">日本感性工学会 20(2), 69-78 <span class="pub-tag">査読有り</span></div>
+      </div>
+    </div>
+    <div class="pub-item">
+      <div class="pub-year">2020</div>
+      <div>
+        <div class="pub-title">Proposal of the VIA Model for PBL activation with recognizing "Snapshot-like" intuitive sense of values</div>
+        <div class="pub-meta">International Journal of Affective Engineering (IJAE) <span class="pub-tag">査読有り</span></div>
+      </div>
+    </div>
+  </div>
+
+  <h4 style="font-family: 'Noto Serif JP', serif; font-size: 18px; margin-top: 56px; margin-bottom: 24px; color: var(--ink);">著書</h4>
+  <div class="books-grid">
+    <div class="book-item">
+      <div class="book-title">問題発見力養成講座 ― レバレッジ・ポイントを見つけ出せ!</div>
+      <div class="book-meta">日本実業出版社, 2009年</div>
+    </div>
+    <div class="book-item">
+      <div class="book-title">「ホントにそうだ!」と相手を納得させる技術</div>
+      <div class="book-meta">あさ出版, 2006年</div>
+    </div>
+    <div class="book-item">
+      <div class="book-title">できる人は凡事徹底</div>
+      <div class="book-meta">中経出版, 2004年</div>
+    </div>
+    <div class="book-item">
+      <div class="book-title">成功する仕事術 ― ファシリテーション習得の7つのメリット</div>
+      <div class="book-meta">ソシム, 2004年</div>
+    </div>
+    <div class="book-item">
+      <div class="book-title">ファシリテーターになろう</div>
+      <div class="book-meta">総合法令出版, 2004年</div>
+    </div>
+    <div class="book-item">
+      <div class="book-title">SEで成功する人 ただのSEで終わる人</div>
+      <div class="book-meta">中経出版, 2003年</div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section id="courses">
+  <div class="section-header">
+    <div class="section-label">Courses</div>
+    <h2 class="section-title">担当科目</h2>
+  </div>
+
+  <div class="courses-container">
+    <div class="course-group">
+      <h4>東京農工大学</h4>
+      <ul class="course-list">
+        <li>知識創造組織論</li>
+        <li>イノベーション組織概論</li>
+        <li>人事管理論</li>
+        <li>プロジェクト研究</li>
+        <li>リサーチ・リテラシー演習</li>
+        <li>シュタインバイス大学合同研修事前研修（英語）</li>
+      </ul>
+    </div>
+    <div class="course-group">
+      <h4>熊本大学（非常勤講師）</h4>
+      <ul class="course-list">
+        <li>MOT概論 基礎編</li>
+        <li>アントレプレナーシップ入門</li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <div class="content-wrapper">
+    <div class="contact-grid">
+      <div style="display: flex; flex-direction: column; gap: 28px;">
+        <div class="section-header" style="margin-bottom: 0;">
+          <div class="section-label">Contact</div>
+          <h2 class="section-title">アクセス・連絡先</h2>
+        </div>
+        <div class="contact-item">
+          <span class="contact-label">所在地</span>
+          <span class="contact-value">東京農工大学 大学院工学府 産業技術専攻<br>〒184-8588 東京都小金井市中町2-24-16</span>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 28px; padding-top: 56px;">
+        <div class="contact-item">
+          <span class="contact-label">E-mail</span>
+          <span class="contact-value"><a href="mailto:k-takahashi@go.tuat.ac.jp">k-takahashi[at]go.tuat.ac.jp</a></span>
+        </div>
+        <div class="contact-item">
+          <span class="contact-label">研究者情報</span>
+          <span class="contact-value">
+            <a href="https://takahashi-lab-tuat.labby.jp/" target="_blank">研究室サイト（Labby）</a><br>
+            研究者番号: 10969918
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  &copy; 2026 髙橋研究室 — 東京農工大学 大学院工学府 産業技術専攻
+</footer>
+
+</body>
+</html>
