@@ -120,72 +120,60 @@
   nav a:hover { color: var(--accent); }
   nav a:hover::after { transform: scaleX(1); }
 
-  /* ===== HERO ===== */
+  /* ===== HERO (Knowledge Graph Animation) ===== */
   .hero {
-    background: linear-gradient(165deg, var(--accent-deep) 0%, var(--accent) 40%, #3d6a9e 100%);
     position: relative;
     overflow: hidden;
-    padding: 80px 40px 72px;
+    height: 340px;
   }
 
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 600px 400px at 80% 20%, rgba(255,255,255,0.06) 0%, transparent 70%),
-      radial-gradient(ellipse 400px 300px at 20% 80%, rgba(255,255,255,0.04) 0%, transparent 70%);
-  }
-
-  .hero::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    opacity: 0.6;
+  .hero canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
   }
 
   .hero-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 5;
+    pointer-events: none;
   }
 
   .hero h1 {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     font-family: 'Noto Serif JP', serif;
-    font-size: 42px;
+    font-size: 38px;
     font-weight: 700;
     color: #ffffff;
     letter-spacing: 0.06em;
-    margin-bottom: 12px;
-    line-height: 1.35;
+    line-height: 1.5;
+    text-align: center;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.4);
   }
 
   .hero-subtitle {
-    font-size: 15px;
-    color: rgba(255,255,255,0.75);
+    position: absolute;
+    bottom: 24px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
     letter-spacing: 0.06em;
     font-weight: 300;
-    margin-bottom: 28px;
   }
 
   .hero-keywords {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    display: none;
   }
 
   .hero-keywords span {
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.18);
-    color: rgba(255,255,255,0.9);
-    padding: 6px 16px;
-    border-radius: 3px;
-    font-size: 12.5px;
-    letter-spacing: 0.04em;
-    font-weight: 400;
-    backdrop-filter: blur(4px);
+    display: none;
   }
 
   /* ===== SECTIONS ===== */
@@ -699,18 +687,12 @@
   </div>
 </header>
 
-<!-- HERO -->
-<div class="hero">
+<!-- HERO (Knowledge Graph Animation) -->
+<div class="hero" id="heroCanvas">
+  <canvas id="graphCanvas"></canvas>
   <div class="hero-inner">
     <h1>組織の未来を、<br>意味生成から考える。</h1>
     <p class="hero-subtitle">Organizational Behavior &middot; Human Resource Development &middot; Entrepreneurship Education</p>
-    <div class="hero-keywords">
-      <span>組織行動論</span>
-      <span>人的資源開発</span>
-      <span>組織開発</span>
-      <span>アントレプレナーシップ教育</span>
-      <span>AI協働型組織開発</span>
-    </div>
   </div>
 </div>
 
@@ -985,4 +967,164 @@
       </div>
     </div>
   </div>
-</di
+</div>
+
+<script>
+(function() {
+  var canvas = document.getElementById('graphCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var container = document.getElementById('heroCanvas');
+
+  var width, height, dpr;
+  var nodes = [];
+  var mouse = { x: -9999, y: -9999 };
+
+  var CONFIG = {
+    nodeCount: 65,
+    connectionDistance: 160,
+    mouseRadius: 200,
+    baseSpeed: 0.3,
+    nodeMinRadius: 2,
+    nodeMaxRadius: 5.5,
+    accentNodes: 5
+  };
+
+  function resize() {
+    var rect = container.getBoundingClientRect();
+    dpr = window.devicePixelRatio || 1;
+    width = rect.width;
+    height = rect.height;
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function createNodes() {
+    nodes = [];
+    for (var i = 0; i < CONFIG.nodeCount; i++) {
+      var isAccent = i < CONFIG.accentNodes;
+      nodes.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * CONFIG.baseSpeed * 2,
+        vy: (Math.random() - 0.5) * CONFIG.baseSpeed * 2,
+        radius: isAccent
+          ? CONFIG.nodeMaxRadius + Math.random() * 1.5
+          : CONFIG.nodeMinRadius + Math.random() * (CONFIG.nodeMaxRadius - CONFIG.nodeMinRadius),
+        isAccent: isAccent,
+        pulsePhase: Math.random() * Math.PI * 2
+      });
+    }
+  }
+
+  function update() {
+    for (var k = 0; k < nodes.length; k++) {
+      var node = nodes[k];
+      node.x += node.vx;
+      node.y += node.vy;
+      node.pulsePhase += 0.015;
+      var margin = 20;
+      if (node.x < margin) { node.x = margin; node.vx = Math.abs(node.vx); }
+      if (node.x > width - margin) { node.x = width - margin; node.vx = -Math.abs(node.vx); }
+      if (node.y < margin) { node.y = margin; node.vy = Math.abs(node.vy); }
+      if (node.y > height - margin) { node.y = height - margin; node.vy = -Math.abs(node.vy); }
+      var dx = node.x - mouse.x;
+      var dy = node.y - mouse.y;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < CONFIG.mouseRadius && dist > 0) {
+        var force = (CONFIG.mouseRadius - dist) / CONFIG.mouseRadius * 0.4;
+        node.vx += (dx / dist) * force;
+        node.vy += (dy / dist) * force;
+      }
+      node.vx *= 0.998;
+      node.vy *= 0.998;
+      var speed = Math.sqrt(node.vx * node.vx + node.vy * node.vy);
+      if (speed < CONFIG.baseSpeed * 0.3) {
+        node.vx += (Math.random() - 0.5) * 0.05;
+        node.vy += (Math.random() - 0.5) * 0.05;
+      }
+    }
+  }
+
+  function draw() {
+    var grad = ctx.createLinearGradient(0, 0, width, height);
+    grad.addColorStop(0, '#0a1628');
+    grad.addColorStop(0.4, '#1a2744');
+    grad.addColorStop(1, '#1e3a5f');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, width, height);
+
+    var glow = ctx.createRadialGradient(width / 2, height * 0.35, 0, width / 2, height * 0.35, 400);
+    glow.addColorStop(0, 'rgba(60, 140, 220, 0.08)');
+    glow.addColorStop(1, 'transparent');
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, width, height);
+
+    for (var i = 0; i < nodes.length; i++) {
+      for (var j = i + 1; j < nodes.length; j++) {
+        var dx = nodes[i].x - nodes[j].x;
+        var dy = nodes[i].y - nodes[j].y;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < CONFIG.connectionDistance) {
+          var alpha = 1 - (dist / CONFIG.connectionDistance);
+          var mi = Math.sqrt(Math.pow(nodes[i].x - mouse.x, 2) + Math.pow(nodes[i].y - mouse.y, 2));
+          var mj = Math.sqrt(Math.pow(nodes[j].x - mouse.x, 2) + Math.pow(nodes[j].y - mouse.y, 2));
+          var isNearMouse = mi < CONFIG.mouseRadius || mj < CONFIG.mouseRadius;
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          if (isNearMouse) {
+            ctx.strokeStyle = 'rgba(160, 210, 255, ' + (alpha * 0.75).toFixed(2) + ')';
+            ctx.lineWidth = 1.8;
+          } else {
+            ctx.strokeStyle = 'rgba(120, 180, 255, ' + (alpha * 0.45).toFixed(2) + ')';
+            ctx.lineWidth = 1.2;
+          }
+          ctx.stroke();
+        }
+      }
+    }
+
+    for (var n = 0; n < nodes.length; n++) {
+      var nd = nodes[n];
+      var pulse = Math.sin(nd.pulsePhase) * 0.3 + 1;
+      var r = nd.radius * pulse;
+      if (nd.isAccent || nd.radius > 4) {
+        ctx.beginPath();
+        ctx.arc(nd.x, nd.y, r * 3, 0, Math.PI * 2);
+        ctx.fillStyle = nd.isAccent ? 'rgba(150, 210, 255, 0.5)' : 'rgba(100, 175, 255, 0.3)';
+        ctx.fill();
+      }
+      ctx.beginPath();
+      ctx.arc(nd.x, nd.y, r, 0, Math.PI * 2);
+      ctx.fillStyle = nd.isAccent ? 'rgba(180, 230, 255, 0.95)' : 'rgba(130, 190, 255, 0.85)';
+      ctx.fill();
+    }
+  }
+
+  function animate() {
+    update();
+    draw();
+    requestAnimationFrame(animate);
+  }
+
+  container.addEventListener('mousemove', function(e) {
+    var rect = container.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+  container.addEventListener('mouseleave', function() {
+    mouse.x = -9999;
+    mouse.y = -9999;
+  });
+
+  window.addEventListener('resize', function() { resize(); });
+  resize();
+  createNodes();
+  animate();
+})();
+</script>
+
+</body>
+</html>
